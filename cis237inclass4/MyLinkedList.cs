@@ -95,6 +95,71 @@ namespace cis237inclass4
             return (returnNode != null) ? returnNode.Data : null;
         }
 
+        public bool Delete(int position)
+        {
+            //Return value for the method
+            bool returnBool = false;
+            //Set current to Head.
+            Current = Head;
+            //If the position that we want to remove is the very first node, we need to do things
+            //different than if it is 1 thru the end
+            if (position == 0)
+            {
+                //set the Head to the Current.Next which will make the next node in the linked list the new head
+                Head = Current.Next;
 
+                if(Head == null)
+                {
+                    Tail = null;
+                }
+                //Sets Current's Next property to null so that it does not connect to anything.  Not 'required' in this case, as this is the 
+                //beginning
+                Current.Next = null;
+                //Sets Current to null to delete the node
+                Current = null;
+                //Return bool as true to show that something was deleted   
+                returnBool = true;                       
+            }
+            else
+            {
+                //Set a tempnode to the first position in the linkedlisit.
+                Node tempNode = Head;
+                //Declare a previous temp that will get a value after the tempNode moves
+                Node previousTempNode = null;
+                //Start a counter to use to move through the linked list
+                int count = 0;
+                //Loop until the tempnode is null (End of list)
+                while(tempNode != null)
+                {
+                    //If we match the position and the count we are on, we found the one that we need to delete
+                    if(count == position)
+                    {
+                        //attaches Node before deleted node to node after deleted node
+                        previousTempNode.Next = tempNode.Next;
+                        //Tests to see if item deleted is at the end of the list.  If so, then the Tail property is also changed
+                        if (tempNode.Next == null)
+                        {
+                            Tail = previousTempNode;
+                        }
+                        //Gets rid of deleted node's connection to next node
+                        tempNode.Next = null;
+                        //Deletes next node
+                        tempNode = null;
+                        //Return bool as true to show that something was deleted   
+                        returnBool = true;
+                    }
+                    //Increments previousTempNode, tempNode, and count so the chain keeps moving
+                    previousTempNode = tempNode;
+                    tempNode = tempNode.Next;
+                    count++;
+                }
+            }
+
+           if(returnBool != true)
+           {
+              Console.WriteLine("Error!  The position did not exist to be deleted!");               
+           }
+           return returnBool;
+        }
     }
 }
