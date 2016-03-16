@@ -25,6 +25,8 @@ namespace cis237inclass4
             {
                 Console.WriteLine(x.Data);
             }
+
+            Console.WriteLine(myLinkedList.Retrieve(3));
         }
     }
 }
